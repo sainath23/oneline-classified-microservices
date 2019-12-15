@@ -63,4 +63,16 @@ public class PostRestController {
     public void deleteById(@PathVariable("id") final Long id) {
         postService.deleteById(id);
     }
+
+    // User temporarily deactivate his ad
+    @PutMapping("/deactivate/{id}")
+    public ResponseEntity<ApiResponseModel<Post>> deactivatePostById(@PathVariable("id") final Long id) {
+        return new ResponseEntity<>(new ApiResponseModel<>(AppConstant.SUCCESS, postService.deactivatePostById(id)), HttpStatus.OK);
+    }
+
+    // User renew his ad
+    @PutMapping("/renew/{id}")
+    public ResponseEntity<ApiResponseModel<Post>> renewPostById(@PathVariable("id") final Long id) {
+        return new ResponseEntity<>(new ApiResponseModel<>(AppConstant.SUCCESS, postService.renewPostById(id)), HttpStatus.OK);
+    }
 }

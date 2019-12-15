@@ -13,4 +13,6 @@ public interface PostService {
     void deleteById(Long id);
     Post createPost(PostModel postModel);
     Post updateById(Long id, PostModel postModel);
+    Post deactivatePostById(Long id);
+    Post renewPostById(Long id);
 }
