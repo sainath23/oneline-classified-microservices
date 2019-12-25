@@ -14,10 +14,3 @@ spring:
       ddl-auto: none
     properties:
       dialect: org.hibernate.dialect.MySQL5Dialect
-
-eureka:
-  instance:
-    prefer-ip-address: true
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka
