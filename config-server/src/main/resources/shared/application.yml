@@ -1,0 +1,14 @@
+# This config file will hold common configs to be shared among all files
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+security:
+  oauth2:
+    resource:
+      user-info-uri: http://localhost:8080/accounts/current
+      token-info-uri: http://localhost:8080/oauth/check_token

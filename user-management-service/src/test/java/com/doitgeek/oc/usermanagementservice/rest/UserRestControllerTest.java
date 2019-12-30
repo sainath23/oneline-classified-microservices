@@ -2,8 +2,8 @@ package com.doitgeek.oc.usermanagementservice.rest;
 
 import com.doitgeek.oc.usermanagementservice.constant.AppConstant;
 import com.doitgeek.oc.usermanagementservice.exception.CustomExceptionHandler;
-import com.doitgeek.oc.usermanagementservice.model.UserRegistrationModel;
-import com.doitgeek.oc.usermanagementservice.service.UserAccountServiceImpl;
+import com.doitgeek.oc.usermanagementservice.model.UserRegistrationDto;
+import com.doitgeek.oc.usermanagementservice.service.UserProfileServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Matchers;
 import org.junit.Before;
@@ -28,7 +28,7 @@ public class UserRestControllerTest {
     private UserRestController userRestController;
 
     @Mock
-    private UserAccountServiceImpl userAccountService;
+    private UserProfileServiceImpl userAccountService;
 
     @Before
     public void setUp() throws Exception {
@@ -54,7 +54,7 @@ public class UserRestControllerTest {
 
     @Test
     public void testCreateUserAccount() throws Exception {
-        UserRegistrationModel model = new UserRegistrationModel();
+        UserRegistrationDto model = new UserRegistrationDto();
         model.setFirstName("Sainath");
         model.setLastName("Parkar");
         model.setEmail("saiparkar4@gmail.com");
@@ -73,7 +73,7 @@ public class UserRestControllerTest {
 
     @Test
     public void testUpdateUserAccount() throws Exception {
-        UserRegistrationModel model = new UserRegistrationModel();
+        UserRegistrationDto model = new UserRegistrationDto();
         model.setFirstName("Sainath");
         model.setLastName("Parkar");
         model.setEmail("saiparkar4@gmail.com");

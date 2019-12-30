@@ -1,12 +1,11 @@
-package com.doitgeek.oc.usermanagementservice.exception;
+package com.doitgeek.oc.authserver.exception;
 
-import com.doitgeek.oc.usermanagementservice.constant.AppConstant;
-import com.doitgeek.oc.usermanagementservice.constant.MessageConstant;
-import com.doitgeek.oc.usermanagementservice.model.ApiResponseModel;
+import com.doitgeek.oc.authserver.constant.AppConstant;
+import com.doitgeek.oc.authserver.constant.ErrorMessageConstant;
+import com.doitgeek.oc.authserver.model.ApiResponseModel;
 import io.micrometer.core.lang.NonNullApi;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,8 +36,8 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     // Handle UserNotFoundException
-    @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<?> handleUserNotFoundException(UserNotFoundException ex) {
+    @ExceptionHandler(UserAccountNotFoundException.class)
+    public ResponseEntity<?> handleUserNotFoundException(UserAccountNotFoundException ex) {
         LOGGER.error(ex.getMessage(), ex);
         ApiResponseModel<String> apiResponseModel = new ApiResponseModel<>();
         apiResponseModel.setStatus(AppConstant.ERROR);
@@ -59,39 +58,20 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
         ApiResponseModel<String> apiResponseModel = new ApiResponseModel<>();
         apiResponseModel.setStatus(AppConstant.ERROR);
-        apiResponseModel.setErrorMessage(MessageConstant.VALIDATION_FAILED);
+        apiResponseModel.setErrorMessage(ErrorMessageConstant.VALIDATION_FAILED);
         apiResponseModel.setErrorMessages(errorMessageMap);
 
         return new ResponseEntity<>(apiResponseModel, HttpStatus.BAD_REQUEST);
     }
 
-    // Handle URI path params miss-match errors
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<?> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex) {
         LOGGER.error(ex.getMessage(), ex);
         ApiResponseModel<String> apiResponseModel = new ApiResponseModel<>();
         apiResponseModel.setStatus(AppConstant.ERROR);
-        String errorMessage = String.format(MessageConstant.METHOD_ARG_TYPE_MISMATCH, ex.getName(),
+        String errorMessage = String.format(ErrorMessageConstant.METHOD_ARG_TYPE_MISMATCH, ex.getName(),
                                     ex.getRequiredType() != null ? ex.getRequiredType().getName() : "");
         apiResponseModel.setErrorMessage(errorMessage);
         return new ResponseEntity<>(apiResponseModel, HttpStatus.BAD_REQUEST);
-    }
-
-    // Handle AuthServerFeignClientException
-    @ExceptionHandler(AuthServerFeignClientException.class)
-    public ResponseEntity<?> handleAuthServerFeignClientException(AuthServerFeignClientException ex) {
-        LOGGER.error("Exception occurred in AuthServerFeignClient: ", ex);
-
-        HttpStatus httpStatus = HttpStatus.resolve(ex.getStatus());
-        if (httpStatus == null) {
-            httpStatus = HttpStatus.BAD_REQUEST;
-        }
-
-        if (ex.getApiResponseModel() != null) {
-            return new ResponseEntity<>(ex.getApiResponseModel(), httpStatus);
-        }
-
-        ApiResponseModel<String> apiResponseModel = new ApiResponseModel<>(AppConstant.ERROR, ex.getMessage());
-        return new ResponseEntity<>(apiResponseModel, httpStatus);
     }
 }

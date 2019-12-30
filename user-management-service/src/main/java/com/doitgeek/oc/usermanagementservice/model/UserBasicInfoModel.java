@@ -21,6 +21,10 @@ public class UserBasicInfoModel {
     @Size(max = 255, message = MessageConstant.EMAIL_SIZE)
     private String email;
 
+    @NotBlank(message = MessageConstant.USERNAME_REQUIRED)
+    @Size(max = 50, message = MessageConstant.USERNAME_SIZE)
+    private String username;
+
     @NotBlank(message = MessageConstant.MOBILE_NO_REQUIRED)
     @Pattern(regexp = "^\\d{8,20}$", message = MessageConstant.MOBILE_NO_VALID)
     private String mobileNumber;
@@ -47,6 +51,14 @@ public class UserBasicInfoModel {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getMobileNumber() {

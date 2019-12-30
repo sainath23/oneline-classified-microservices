@@ -1,4 +1,4 @@
-package com.doitgeek.oc.usermanagementservice.model;
+package com.doitgeek.oc.authserver.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -49,15 +49,5 @@ public class ApiResponseModel<T> {
 
     public void setErrorMessages(Map<String, String> errorMessages) {
         this.errorMessages = errorMessages;
-    }
-
-    @Override
-    public String toString() {
-        return "ApiResponseModel{" +
-                "status='" + status + '\'' +
-                ", data=" + data +
-                ", errorMessage='" + errorMessage + '\'' +
-                ", errorMessages=" + errorMessages +
-                '}';
     }
 }
